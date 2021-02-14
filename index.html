@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scoped CSS Variables and JS</title>
+</head>
+
+<body>
+    <div class="container">
+        <h2>update css variables with <span class="h1">js</span></h2>
+
+        <div class="controls">
+            <label for="spacing">Spacing:</label>
+            <input id="spacing" type="range" name="spacing" min="10" max="200" value="10" data-sizing="px">
+
+            <label for="blur">blur:</label>
+            <input type="range" name="blur" id="blur" data-sizing="px" min="0" max="25" value="10">
+
+            <label for="base">base color:</label>
+            <input type="color" name="base" id="base" value="black">
+        </div>
+        <img
+            src="https://images.unsplash.com/photo-1613163773260-385b6ab5459d?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80">
+    </div>
+
+
+
+    <style>
+        :root {
+            --base: black;
+            --spacing: 10px;
+            --blur: 10px;
+        }
+
+        img {
+            padding: var(--spacing);
+            background: var(--base);
+            filter: blur(var(--blur));
+            height: 500px;
+
+        }
+
+        .h1 {
+            color: var(--base);
+        }
+
+        body {
+            text-align: center;
+            background: gray;
+            color: honeydew;
+            font-family: 'Times New Roman', Times, serif;
+            font-weight: 100;
+            font-size: 20px;
+
+
+
+        }
+
+        .container {
+            min-height: 100vh;
+        }
+
+        .controls {
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 100px;
+        }
+    </style>
+
+
+    <script>
+        const inputs = document.querySelectorAll('.controls input');
+
+        function handleUpdate() {
+            const suffix = this.dataset.sizing || '';
+            document.documentElement.style.setProperty(`--${this.name}`, this.value + suffix);
+        }
+        inputs.forEach(input => input.addEventListener('change', handleUpdate));
+        inputs.forEach(input => input.addEventListener('mousemove', handleUpdate));
+    </script>
+</body>
+
+</html>
